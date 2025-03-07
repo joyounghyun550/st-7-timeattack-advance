@@ -1,19 +1,12 @@
-import { todoApi } from "../api/todos";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
-import { useQuery } from "@tanstack/react-query";
+import { useTodosQuery } from "../hooks/useTodosQuery";
 
 export default function Home() {
   // TODO: 필수: useQuery 로 리팩터링 하세요.
   // TODO: 선택: useQuery 로 리팩터링 후, 커스텀훅 useTodosQuery 로 정리해 보세요.
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["todos"],
-    queryFn: async () => {
-      const response = await todoApi.get("/todos");
-      return response.data;
-    },
-  });
+  const { data, isLoading, isError } = useTodosQuery();
 
   if (isLoading) {
     return <div style={{ fontSize: 36 }}>로딩중...</div>;

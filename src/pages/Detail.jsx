@@ -1,27 +1,19 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { todoApi } from "../api/todos";
-import { useQuery } from "@tanstack/react-query";
+import { useTodoQuery } from "../hooks/useTodoQuery";
 
 export default function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { data, isLoading, error } = useTodoQuery(id);
 
   // TODO: 필수: useQuery 로 리팩터링 하세요.
   // TODO: 선택: useQuery 로 리팩터링 후, useTodoQuery 커스텀훅으로 정리해 보세요.
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["detail", { id }],
-    queryFn: async () => {
-      const response = await todoApi.get(`/todos/${id}`);
-      return response.data;
-    },
-  });
-
   if (isLoading) return <div style={{ fontSize: 36 }}>로딩중...</div>;
-  if (isError) {
-    console.error(isError);
+  if (error) {
+    console.error(error);
     return (
-      <div style={{ fontSize: 24 }}>에러가 발생했습니다: {isError.message}</div>
+      <div style={{ fontSize: 24 }}>에러가 발생했습니다: {error.message}</div>
     );
   }
 
