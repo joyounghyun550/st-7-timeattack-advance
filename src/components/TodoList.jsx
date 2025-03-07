@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function TodoList({ todos }) {
   const navigate = useNavigate();
+  const todoList = Array.isArray(todos) ? todos : [];
   return (
     <ul style={{ listStyle: "none", width: 250 }}>
-      {todos.map((todo) => (
+      {todoList.map((todo) => (
         <li
           key={todo.id}
           style={{
