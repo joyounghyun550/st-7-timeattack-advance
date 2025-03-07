@@ -10,7 +10,7 @@ export default function Detail() {
   // TODO: 선택: useQuery 로 리팩터링 후, useTodoQuery 커스텀훅으로 정리해 보세요.
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["todos"],
+    queryKey: ["todos", { id }],
     queryFn: async () => {
       const response = await todoApi.get(`/todos/${id}`);
       return response.data;
